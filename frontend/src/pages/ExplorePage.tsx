@@ -1,5 +1,5 @@
 // ExplorePage.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
 import SendIcon from '@mui/icons-material/Send';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,6 +14,8 @@ const ExplorePage: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const [loading, setLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAIQuery = () => {
     if (!searchTerm) return;
@@ -58,7 +60,7 @@ const ExplorePage: React.FC = () => {
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
-      setSearchTerm(transcript);
+      setSearchTerm((prev) => prev + ' ' + transcript);
     };
     recognition.onerror = () => setIsListening(false);
     recognition.onend = () => setIsListening(false);
@@ -66,19 +68,28 @@ const ExplorePage: React.FC = () => {
     recognition.start();
   };
 
+  useEffect(() => {
+    chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatHistory, loading]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [searchTerm]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex flex-col justify-end items-center pt-24 pb-6 px-4">
-      {/* Chat Messages */}
-      <div className="flex-1 w-full max-w-3xl overflow-y-auto mb-4 space-y-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex flex-col justify-end items-center pt-4 pb-6 px-4 ">
+      {/* Chat Section */}
+      <div className="flex-1 w-full max-w-3xl mb-4 space-y-4">
         {chatHistory.map((msg, idx) => (
           <div
             key={idx}
-            className={`flex ${
-              msg.sender === 'user' ? 'justify-end' : 'justify-start'
-            }`}
+            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`px-4 py-2 rounded-lg max-w-[80%] text-left ${
+              className={`px-4 py-2 rounded-lg max-w-[80%] text-left break-words whitespace-pre-wrap ${
                 msg.sender === 'user'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-200 text-gray-800'
@@ -95,16 +106,19 @@ const ExplorePage: React.FC = () => {
             </div>
           </div>
         )}
+        <div ref={chatRef} />
       </div>
 
-      {/* Search Box Fixed at Bottom */}
+      {/* Static Search Bar */}
       <div className="w-full max-w-3xl relative">
-        <input
-          type="text"
+        <textarea
+          ref={textareaRef}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Ask Property AI..."
-          className="w-full pl-12 pr-12 py-4 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow"
+          rows={1}
+          className="w-full pl-12 pr-12 py-4 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-600 shadow resize-none overflow-hidden"
+          style={{ minHeight: '3.5rem', maxHeight: '30vh' }}
         />
 
         {/* Mic Button */}
