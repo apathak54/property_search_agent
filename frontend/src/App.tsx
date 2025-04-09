@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import PropertySearch from './components/PropertySearch';
 import Navbar from './components/Navbar';
-import LandingPage from './pages/LandingPage';
+//import LandingPage from './pages/LandingPage';
 import ExplorePage from './pages/ExplorePage';
 
 const theme = createTheme({
@@ -25,7 +25,7 @@ function App() {
         <Navbar />
         
         <Routes>
-          <Route path="/" element={<LandingPage/>} />
+          <Route path="/" element={<PropertySearch/>} />
           <Route path='/explore' element={<ExplorePage/>} />
         </Routes>
       </Router>
