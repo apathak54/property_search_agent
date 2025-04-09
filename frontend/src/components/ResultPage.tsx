@@ -21,15 +21,32 @@ const ResultsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const getBudgetByPropertyType = (type: string): number => {
+    switch (type) {
+      case 'normal':
+        return 50000;
+      case 'premium':
+        return 500000;
+      case 'luxury':
+        return 5000000;
+      default:
+        return 50000;
+    }
+  };
+
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get('https://realmapagent.onrender.com/api/entity/');
+        const budget = getBudgetByPropertyType(propertyType);
+        const res = await axios.post('http://127.0.0.1:5000/search', {
+          type,
+          budget
+        });
 
-        const allProperties = res.data.data || [];
+        const responseData = Array.isArray(res.data) ? res.data : res.data.data || [];
 
-        const filtered = allProperties.filter(
-          (p: Property) => p.propertyType === propertyType
+        const filtered = responseData.filter(
+          (property: any) => property.propertyType === propertyType
         );
 
         setProperties(filtered);

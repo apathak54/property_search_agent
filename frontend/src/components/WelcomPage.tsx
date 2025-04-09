@@ -3,7 +3,7 @@ import { Radio, FormControlLabel, FormLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const WelcomePage = () => {
-    const [paymentType, setPaymentType] = useState<'one-time' | 'monthly'>('monthly');
+    const [paymentType, setPaymentType] = useState<'one-time' | 'monthly' | null>(null);
     const navigate = useNavigate();
 
     const handlePropertyClick = (propertyType: 'normal' | 'premium' | 'luxury') => {
