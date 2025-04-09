@@ -38,7 +38,7 @@ const PropertySelector: React.FC = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/search', {
+      const response = await axios.post('http://127.0.0.1:5000/search', {
         type: 'monthly',
         budget: amount,
       });
@@ -79,7 +79,7 @@ const PropertySelector: React.FC = () => {
           Loading properties...
         </p>
       )}
-      <div className="flex justify-center items-center p-6 m-2 gap-6">
+      <div className="flex flex-wrap justify-center items-center p-6 m-2 gap-6">
         {properties.map((property) => (
           <div
             key={property._id}

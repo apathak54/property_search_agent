@@ -5,6 +5,8 @@ import PropertySearch from './components/PropertySearch';
 import Navbar from './components/Navbar';
 //import LandingPage from './pages/LandingPage';
 import ExplorePage from './pages/ExplorePage';
+import WelcomePage from './components/WelcomPage';
+import ResultsPage from './components/ResultPage';
 
 const theme = createTheme({
   palette: {
@@ -27,6 +29,8 @@ function App() {
         <Routes>
           <Route path="/" element={<PropertySearch/>} />
           <Route path='/explore' element={<ExplorePage/>} />
+          <Route path='/s' element={<WelcomePage/>} />
+          <Route path='/results' element={<ResultsPage/>} />
         </Routes>
       </Router>
     </ThemeProvider>
