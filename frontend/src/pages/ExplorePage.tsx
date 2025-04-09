@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import MicIcon from '@mui/icons-material/Mic';
 import SendIcon from '@mui/icons-material/Send';
 import CircularProgress from '@mui/material/CircularProgress';
+import PropertySelector from '../components/PropertySelector';
 
 interface Message {
   sender: 'user' | 'ai';
@@ -97,6 +98,7 @@ const ExplorePage: React.FC = () => {
   return (
     <div className="min-h-screen pt-16 bg-gradient-to-br from-gray-50 to-white flex flex-col justify-end items-center pb-6 px-4">
       {/* Chat Section */}
+        <PropertySelector/>
       <div className="flex-1 w-full max-w-3xl mb-4 space-y-4">
         {chatHistory.map((msg, idx) => (
           <div

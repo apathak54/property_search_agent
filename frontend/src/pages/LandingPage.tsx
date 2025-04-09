@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
         </p>
         <button
           onClick={() => navigate('/explore')}
-          className="mt-4 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+          className="mt-4 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 cursor-pointer transition duration-300"
         >
           Explore Properties
         </button>
