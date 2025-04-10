@@ -1,5 +1,5 @@
 import pymongo
-from config import ConfigData
+from backend.config import ConfigData
 import requests
 import json
 

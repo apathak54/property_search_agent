@@ -5,7 +5,7 @@ import json
 import re
 import pymongo
 from bson import ObjectId
-from config import ConfigData
+from backend.config import ConfigData
 import os
 
 # Custom JSON encoder for MongoDB documents
