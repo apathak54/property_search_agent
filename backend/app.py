@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymongo
-from backend.config import ConfigData
+from config import ConfigData
 from bson import ObjectId
 import json
 
