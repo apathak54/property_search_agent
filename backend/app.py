@@ -18,6 +18,10 @@ class JSONEncoder(json.JSONEncoder):
         if isinstance(obj, ObjectId):
             return str(obj)
         return super().default(obj)
+    
+@app.route('/')
+def home():
+    return 'Hello from Flask!'
 
 @app.route('/search', methods=['POST'])
 def search_properties():
