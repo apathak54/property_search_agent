@@ -16,7 +16,7 @@ interface Property {
 
 const ResultsPage = () => {
   const location = useLocation();
-  const { type, propertyType } = location.state || {};
+  const {type, propertyType } = location.state || {};
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -37,7 +37,17 @@ const ResultsPage = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const budget = getBudgetByPropertyType(propertyType);
+        const budget =
+        type === 'one-time'
+          ? propertyType === 'normal'
+            ? 10000000
+            : propertyType === 'premium'
+            ? 100000000
+            : propertyType === 'luxury'
+            ? 500000000
+            : 10000000
+          : getBudgetByPropertyType(propertyType);
+
         const res = await axios.post('https://property-search-agent.onrender.com/search', {
           type,
           budget
